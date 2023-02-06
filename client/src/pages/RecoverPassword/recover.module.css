@@ -1,0 +1,40 @@
+.fondoRecover{
+    background-color: #829bc5;
+    color: white;
+    outline: none;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 19px;
+ 
+}
+
+
+.divInput{
+    background-color: #829bc5;
+    width: 100%;
+    border: 1px solid white;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    padding: 10px;  
+}
+
+.input{
+    background-color: #829bc5;
+    color: white;
+    width: 82%;
+    outline: none;
+    text-align: center;
+    border-radius: 40px;
+}
+
+
+.input::placeholder{
+    color: white;  
+    text-align: center;
+}
+
+.icons{
+    filter: invert(1);
+}

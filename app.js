@@ -7,7 +7,21 @@ const router = require('express').Router();
 
 const connectDB = require('./database/config');
 
-var app = express();
+const app = express();
+
+const cors = require('cors');
+const checkToken = require('./middlewares/checkToken');
+const whiteList = [process.env.URL_FRONTEND];
+const corsOptions = {
+    origin: function (origin, callback) {
+        if(whiteList.includes(origin)) {
+          callback(null, true)
+        }else{
+          callback(new Error('Error de Cors'))
+        }
+    }
+}
+
 
 connectDB()
 
@@ -17,9 +31,10 @@ app.use(express.urlencoded({ extended: false }));
 
 //Rutas
 app
+.use(cors())
 .use('/api/auth',require('./routes/auth'))
 .use('/api/users',require('./routes/users'))
-.use('/api/projects',require('./routes/projects'))
+.use('/api/projects', checkToken,require('./routes/projects'))
 .use('/api/tasks',require('./routes/tasks'))
 
 

@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root{
+    height: 100vh;
+    /* background-color: rgb(224, 223, 223); */
+
+}
+
+main{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    font-family: system-ui;
+    justify-content: center;
+    background-color: #606f88 !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}

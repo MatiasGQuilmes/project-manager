@@ -1,0 +1,64 @@
+.fondoLogin{
+    background-color: #8aa2c9;
+    border-radius: 19px;
+    padding: 1rem;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divInput{
+    background-color: #829bc5;
+    width: 100%;
+    border: 1px solid white;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;  
+}
+
+.button{
+    background-color: #657fad !important;
+    /* font-weight: bold; */
+    color: white;
+    width: 100%;
+    border-radius: 40px;
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    letter-spacing: 1px;
+    /* font-size: 18px; */
+}
+
+.button:checked{
+    background-color: red;
+}
+
+.input{
+    background-color: #829bc5;
+    color: white;
+    width: 82%;
+    outline: none;
+    text-align: center;
+    border-radius: 40px;
+}
+
+
+.input::placeholder{
+    color: white;  
+    text-align: center;
+}
+
+.icons{
+    filter: invert(1);
+}
+
+.olvidePass{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}

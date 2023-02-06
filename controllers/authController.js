@@ -3,6 +3,7 @@ const UserDB = require("../database/models/User")
 const errorResponse = require('../helpers/errorResponse');
 const generateTokenRandom = require('../helpers/generateTokenRandom');
 const generateJWT = require("../helpers/generateJWT");
+const { confirmRegister, forgotPassword } = require('../helpers/sendMails');
 
 module.exports = {
     register: async(req, res)=>{
@@ -24,18 +25,24 @@ module.exports = {
                 throw createError(400,"El email ya se encuentra registrado");
             }
 
+            const token = generateTokenRandom();
+
             user = new UserDB(req.body);
-            user.token = generateTokenRandom()
+            user.token = token;
             
             const userSaved = await user.save();
 
-            //todo: enviar email de confirmacion
-
+            //envia email de confirmacion
+            await confirmRegister({
+                name: userSaved.name,
+                email: userSaved.email,
+                token: userSaved.token
+            })
 
             return res.status(201).json({
                 ok: true,
-                msg: 'usuario registrado',
-                data: userSaved
+                msg: `Se ha enviado las instruccion para completar el registro al email ${email} `,
+                user: userSaved
             })
 
         }catch(error){
@@ -81,12 +88,11 @@ module.exports = {
                 msg: 'usuario logueado',
                 user: {
                     nombre: user.name,
-                    email: user.email,
-                    token: generateJWT({
-                        id: user._id
-                    })
-
-                }
+                    _id: user._id,
+                },
+                token: generateJWT({
+                    id: user._id
+                })
             })
             
         }catch(error){
@@ -135,14 +141,21 @@ module.exports = {
                 email
             })
 
-            if(!user) throw createError(400,"el email es incorrecto");
+            if(!user) throw createError(400,"el email no esta registrado");
             
-            user.token = generateTokenRandom()
+            const token = generateTokenRandom();
 
-            await user.save()
+            user.token = token
+
+            const userSaved = await user.save()
 
             // todo: enviar email para restablecer la contraseña
-            
+
+            await forgotPassword({
+                name: userSaved.name,
+                email: userSaved.email,
+                token: userSaved.token
+            })
 
             return res.status(200).json({
                 ok: true,
@@ -159,21 +172,49 @@ module.exports = {
     verifyToken: async(req, res)=>{
 
         try{
+
+            const {token} = req.query;
+
+            if(!token) throw createError(400, "debe colocar un token en la peticion")
+
+            const user = await UserDB.findOne({
+                token
+            })
+
+            if(!user) throw createError(400, "el token no existe")
+
             return res.status(200).json({
                 ok: true,
-                msg: 'Token enviado'
+                msg: 'Token verificado'
             })
         }catch(error){
             console.log(error);
-             return errorResponse(res, error, "SEND-TOKEN")
+             return errorResponse(res, error, "VERIFY-TOKEN")
         }
     },
     changePassword: async(req, res)=>{
 
         try{
+
+            const {token} = req.query;
+            const {password} = req.body;
+
+            if(!password) throw createError(400, "debe colocar el password!!");
+
+            const user = await UserDB.findOne({
+                token
+            })
+
+            if(!user) throw createError(400, "el token es invalido!!");
+
+            user.password = password;
+            user.token = "";
+
+            await user.save();
+
             return res.status(200).json({
                 ok: true,
-                msg: 'Password actualizado'
+                msg: 'La contraseña ha sido reestablecido exitosamente'
             })
         }catch(error){
             console.log(error);
