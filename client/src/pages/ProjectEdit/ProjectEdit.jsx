@@ -1,18 +1,41 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import { FormProject } from "../../components/FormProject/FormProject";
+import { useProjects } from "../../hooks/useProjects";
+
 export const ProjectEdit = () => {
+
+    const {deleteProject} = useProjects();
+
+    const {id} = useParams();
+
+    const handleDelete = () => {
+        Swal.fire({
+            title: '¿Estás seguro de eliminar el proyecto?',
+            showCancelButton: true,
+            confirmButtonColor : 'red',
+            confirmButtonText: 'Confirmar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              deleteProject(id)
+            } 
+          })
+    }
+
+
     return (
         <>
-            <div>
-                <h1>Editar proyecto: Nombre del proyecto</h1>
-                <div>
+            <div className="flex justify-between p-4 mt-10">
+                <h1 className="text-white font-bold text-3xl">Editar proyecto: Nombre del proyecto</h1>
+                <div className="flex items-center text-white bg-red-600 p-3 rounded-lg">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-6 h-6"
+                        className="w-6 h-6 "
                     >
                         <path
                             strokeLinecap="round"
@@ -26,11 +49,12 @@ export const ProjectEdit = () => {
                         />
                     </svg>
                     <button
-                    /* onClick={} */
+                        onClick={handleDelete}
+                        className="pl-1 uppercase font-bold"
                     >Eliminar</button>
                 </div>
             </div>
-            <div>
+            <div className="p-4">
                 <FormProject />
             </div>
         </>

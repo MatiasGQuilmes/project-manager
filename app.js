@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //Rutas
 app
-.use(cors())
+.use(cors(corsOptions))//
 .use('/api/auth',require('./routes/auth'))
 .use('/api/users',require('./routes/users'))
 .use('/api/projects', checkToken,require('./routes/projects'))

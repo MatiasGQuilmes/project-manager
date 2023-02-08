@@ -14,7 +14,7 @@ const projectSchem = new mongoose.Schema({
         trim: true,
         unique: true
     },
-    dataExpire: {
+    dateExpire: {
         type: Date,
         default: Date.now()
     },

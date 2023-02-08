@@ -34,7 +34,7 @@ module.exports = {
 
             if(!req.user) throw createError(401, "Error de authentication")
 
-            const project = new Project(req.body)
+            const project =  new Project(req.body)
             project.createdBy = req.user._id
             // console.log(project);
 
@@ -103,7 +103,7 @@ module.exports = {
             project.name = name || project.name;
             project.description = description || project.description;
             project.client = client || project.client;
-            project.dataExpire = dataExpire || project.dataExpire;
+            project.dateExpire = dataExpire || project.dateExpire;
 
             const projectUpdated = await project.save()
 
