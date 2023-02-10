@@ -3,7 +3,7 @@ import 'boxicons'
 
 export const Task = () => {
     return (
-        <div className="bg-cyan-600 w-full flex justify-between mt-3 rounded-lg p-3">
+        <div className="bg-cyan-600 w-full max-[800px]:flex-col flex justify-between mt-3 rounded-lg p-3  ">
             <div className="flex items-center justify-between mr-4 w-full">
                 <p className="p-">Nombre de la tarea</p>
                 <p>Descripción </p>

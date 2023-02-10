@@ -11,7 +11,7 @@ export const Header = () => {
                         to='/projects'
                         className="pr-5 uppercase font-bold "
                     >   
-                    <p className="hover:bg-sky-700 p-2 rounded-lg text-cyan-900 bg-white"> Proyectos</p>
+                    <p className="hover:bg-sky-700 hover:text-white p-2 rounded-lg text-cyan-900 bg-white"> Proyectos</p>
                        
                     </Link>
                     <button
@@ -24,8 +24,8 @@ export const Header = () => {
                 </div>
         
             </div>
-            <div className="flex justify-between bg-white p-2 pr-4 pl-4 ">
-                <p className="text-black flex items-center">Hola: Nombre de usuario</p>
+            <div className="flex justify-end bg-white p-2 pr-4 pl-4 ">
+              
                  <input className="rounded-lg p-1 outline-cyan-500 border-2 border-cyan-500" type="text" placeholder=" Buscar proyecto..." />
             </div>
         </div>

@@ -13,14 +13,14 @@ export const Projects = () => {
 
   return (
     <>
-      <div className='bg-cyan-600flex flex-col items-center mt-10 w-full p-4 '>
+      <div className='flex flex-col items-center mt-10 p-4 w-full'>
         <h1 className=' text-white font-bold text-3xl'>
           Proyectos
         </h1>
         {/* <div>
         <ProjectPreview />
         </div> */}
-        <div className='w-full mt-7'>
+        <div className='w-4/5 mt-7 '>
           {
             loading 
             ? 
