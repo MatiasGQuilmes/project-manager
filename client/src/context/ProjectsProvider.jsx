@@ -27,6 +27,23 @@ const ProjectsProvider = ({children}) => {
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState({});
 
+  const [showModal, setShowModal] = useState(false);
+
+  const [alertModal, setAlertModal] = useState({});
+
+  const showAlertModal = (msg, time = true) =>{
+      setAlertModal({
+        msg,
+      });
+
+      if(time){
+        setTimeout(()=>{
+          setAlertModal({});
+        }, 3000)
+      }
+  }
+
+
   const showAlert = (msg, time = true) => {
       setAlert({
           msg
@@ -39,6 +56,10 @@ const ProjectsProvider = ({children}) => {
       }  
   }
 
+  
+  const handleShowModal = () =>{
+      setShowModal(!showModal)
+  }
 
 
   const getProjects= async () => {
@@ -187,6 +208,40 @@ const ProjectsProvider = ({children}) => {
     }
   }
 
+  
+  const storeTask = async (task) => {
+    try{
+        const token = sessionStorage.getItem("token");
+        if(!token) return null;
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+          }
+        }
+
+        task.project = project._id;
+
+        const {data} = await clientAxios.post("/tasks", task, config);
+
+        project.tasks = [...project.tasks, data.tasks];
+        setProject(project);
+
+        setShowModal(false)
+
+        Toast.fire({
+          icon: "success",
+          title: data.msg,
+          });
+          setAlert({});
+
+    }catch(error) {
+        console.error(error);
+        showAlertModal(error.response ? error.response.data.msg : "Upss, hubo un error", false);
+    }
+  }
+
   return (
     <ProjectsContext.Provider
         value={{
@@ -198,7 +253,14 @@ const ProjectsProvider = ({children}) => {
                 project,
                 getProject,
                 storeProject,
-                deleteProject
+                deleteProject,
+                showModal,
+                setShowModal,
+                handleShowModal,
+                alertModal,
+                setAlertModal,
+                showAlertModal,
+                storeTask
             }}
     >
         {children}

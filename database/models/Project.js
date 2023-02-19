@@ -33,6 +33,12 @@ const projectSchem = new mongoose.Schema({
             ref: 'User'    
         }
     ],
+    tasks: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            tef: 'Task'
+        }
+    ]
 }
 , {
     timestamps: true,

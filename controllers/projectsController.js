@@ -63,11 +63,12 @@ module.exports = {
                 throw createError(400, "no es un id valido")
               }
 
-            const project = await Project.findById(id);
+            const project = await Project.findById(id).populate('tasks');
             
             if(!project) throw createError(404, "proyecto no encontrado")
 
             if(req.user._id.toString() !== project.createdBy.toString()) throw createError(401, "No estas autorizado capo/a")
+
 
 
             return res.status(200).json({
